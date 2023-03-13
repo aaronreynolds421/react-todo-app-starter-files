@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
-import { deleteToDo } from '../reducers/todoSlice';
+import { DeleteToDo } from '../reducers/todoSlice';
 import styles from '../styles/modules/todoItem.module.scss';
 import { getClass } from '../utilities/getClass';
 import TDM from './TDM';
@@ -13,7 +13,7 @@ function ToDoItem({ ToDo }) {
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
 
   const handleDelete = () => {
-    dispatch(deleteToDo(ToDo.id));
+    dispatch(DeleteToDo(ToDo.id));
     toast.success('Task was successfully deleted');
   };
   const handleUpdate = () => {
@@ -61,6 +61,7 @@ function ToDoItem({ ToDo }) {
       </div>
       <TDM
         type="update"
+        ToDo={ToDo}
         modalOpen={updateModalOpen}
         setModalOpen={setUpdateModalOpen}
       />

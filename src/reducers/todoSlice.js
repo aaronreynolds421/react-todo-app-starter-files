@@ -28,7 +28,7 @@ export const todoSlice = createSlice({
         window.localStorage.setItem('ToDoList', JSON.stringify(ToDoListArr)); // then sets back the todo into the local storage.
       }
     },
-    deleteToDo: (state, action) => {
+    DeleteToDo: (state, action) => {
       const ToDoList = window.localStorage.getItem('ToDoList');
       if (ToDoList) {
         const ToDoListArr = JSON.parse(ToDoList);
@@ -41,8 +41,22 @@ export const todoSlice = createSlice({
         state.ToDoList = ToDoListArr;
       }
     },
+    UpdateToDo: (state, action) => {
+      const ToDoList = window.localStorage.getItem('ToDoList');
+      if (ToDoList) {
+        const ToDoListArr = JSON.parse(ToDoList);
+        ToDoListArr.forEach((ToDo) => {
+          if (ToDo.id === action.payload) {
+            ToDo.status = action.payload.status;
+            ToDo.title = action.payload.title;
+          }
+        });
+        window.localStorage.setItem('ToDoList', JSON.stringify(ToDoListArr));
+        state.ToDoList = ToDoListArr;
+      }
+    },
   },
 });
 
-export const { addToDo, deleteToDo } = todoSlice.actions;
+export const { addToDo, DeleteToDo, UpdateToDo } = todoSlice.actions;
 export default todoSlice.reducer;

@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { MdOutlineClose } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import styles from '../styles/modules/modal.module.scss';
-import { addToDo } from '../reducers/todoSlice';
+import { addToDo, UpdateToDo } from '../reducers/todoSlice';
 
-function TDM({ type, modalOpen, setModalOpen }) {
+function TDM({ type, modalOpen, setModalOpen, ToDo }) {
   const [title, setTitle] = useState('');
   const [status, setStatus] = useState('incomplete');
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (type === 'update' && ToDo) {
+      setTitle(ToDo.title);
+      setStatus(ToDo.status);
+    } else {
+      setTitle('');
+      setStatus('incomplete');
+    }
+  }, [type, ToDo, modalOpen]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,7 +42,17 @@ function TDM({ type, modalOpen, setModalOpen }) {
         setModalOpen(false);
       }
       if (type === 'update') {
-        console.log('updating task');
+        if (ToDo.title !== title || ToDo.status !== status) {
+          dispatch(
+            UpdateToDo({
+              ...ToDo,
+              title,
+              status,
+            })
+          );
+        } else {
+          toast.error('No Changes Made');
+        }
       }
     } else {
       toast.error('Title can not be empty');
