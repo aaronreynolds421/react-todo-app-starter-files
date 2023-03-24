@@ -45,8 +45,8 @@ export const todoSlice = createSlice({
       const ToDoList = window.localStorage.getItem('ToDoList');
       if (ToDoList) {
         const ToDoListArr = JSON.parse(ToDoList);
-        ToDoListArr.forEach((ToDo) => {
-          if (ToDo.id === action.payload) {
+        ToDoListArr.forEach((ToDo, index) => {
+          if (ToDo.id === action.payload.id) {
             ToDo.status = action.payload.status;
             ToDo.title = action.payload.title;
           }

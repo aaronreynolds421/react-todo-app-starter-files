@@ -90,7 +90,7 @@ function TDM({ type, modalOpen, setModalOpen, ToDo }) {
                 name="status"
                 id="status"
                 value={status}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => setStatus(e.target.value)}
               >
                 <option value="incomplete">To Be Done</option>
                 <option value="complete">Done</option>
